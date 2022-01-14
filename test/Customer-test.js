@@ -19,19 +19,19 @@ describe('Customer', () => {
     expect(sampleCustomer).to.be.an.instanceof(Customer);
   });
 
-  it('should store an id property', () => {
+  it('should have an id property', () => {
     expect(sampleCustomer).to.have.a.property('id');
   });
 
-  it('should have an id', () => {
+  it('should store an id', () => {
     expect(sampleCustomer.id).to.equal(1);
   });
 
-  it('should store a name property', () => {
+  it('should have a name property', () => {
     expect(sampleCustomer).to.have.a.property('name');
   });
 
-  it('should have a name', () => {
+  it('should store a name', () => {
     expect(sampleCustomer.name).to.equal("Leatha Ullrich")
   });
 
