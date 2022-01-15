@@ -2,13 +2,18 @@ import {
   expect
 } from 'chai';
 import Customer from '../src/classes/Customer';
+import User from '../src/classes/User';
+import sampleUserData from '../src/data/sample-users';
+import sampleBookingData from '../src/data/sample-bookings';
+import sampleRoomData from '../src/data/sample-rooms';
 
 
 describe('Customer', () => {
-  let sampleCustomer;
+  let customerOne, customerTwo;
 
   beforeEach(() => {
-    sampleCustomer = new Customer({ "id": 1, "name": "Leatha Ullrich"});
+    customerOne = new Customer(sampleUserData[0]);
+    customerTwo = new Customer(sampleUserData[1]);
   });
 
   it('should be a function', () => {
@@ -16,23 +21,28 @@ describe('Customer', () => {
   });
 
   it('should be an instance of Customer', () => {
-    expect(sampleCustomer).to.be.an.instanceof(Customer);
+    expect(customerOne).to.be.an.instanceOf(Customer);
   });
 
-  it('should have an id property', () => {
-    expect(sampleCustomer).to.have.a.property('id');
+  it('should be able to return customer bookings', () => {
+    customerOne.gatherCustomerBookings(sampleBookingData);
+    expect(customerOne.allBookings).to.deep.equal([sampleBookingData[1], sampleBookingData[4]]);
+
+    customerTwo.gatherCustomerBookings(sampleBookingData)
+    expect(customerTwo.allBookings).to.deep.equal([]);
   });
 
-  it('should store an id', () => {
-    expect(sampleCustomer.id).to.equal(1);
-  });
+  it('should return total amount spend on rooms', () => {
+    customerOne.gatherCustomerBookings(sampleBookingData);
+    expect(customerOne.calculateTotalSpent(sampleRoomData)).to.equal(787.84);
 
-  it('should have a name property', () => {
-    expect(sampleCustomer).to.have.a.property('name');
-  });
+    customerTwo.gatherCustomerBookings(sampleBookingData);
+    expect(customerTwo.calculateTotalSpent(sampleRoomData)).to.equal(0);
+  })
 
-  it('should store a name', () => {
-    expect(sampleCustomer.name).to.equal("Leatha Ullrich")
-  });
-
+    
 })
+  
+
+
+
