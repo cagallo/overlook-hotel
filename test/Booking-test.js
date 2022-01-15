@@ -3,20 +3,13 @@ import {
 } from 'chai';
 import Booking from '../src/classes/Booking';
 import sampleBookingData from '../src/data/sample-bookings';
+
   
   
 describe('Booking', () => {
   let sampleBooking;
   
   beforeEach(() => {
-    // const bookingData = {
-    //   "id": "5fwrgu4i7k55hl6sz",
-    //   "userID": 9,
-    //   "date": "2022/04/22",
-    //   "roomNumber": 15,
-    //   "roomServiceCharges": []
-    // };
-
     sampleBooking = new Booking(sampleBookingData[0]);
   });
   
