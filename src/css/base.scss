@@ -1,6 +1,64 @@
 /* This is an example of how to import a partial scss file*/
 @import '_variables';
 
+html {
+  min-height: 100%;
+}
+
 body {
-  background: $primary-background;
+    background-image: url('https://www.teahub.io/photos/full/164-1641842_red-and-black-vintage-wallpaper-5-high-resolution..jpg');
+    // background-color: #cccccc;
+}
+
+
+
+img {
+  height: 100%;
+  width: 100%;
+}
+
+h1 {
+  font-size: 70px; 
+  font-family: 'Creepster', cursive;
+  font-weight: 25;
+  margin: 30px 10px 5px 10px;
+  color: #f80505;
+}
+
+nav {
+  display: flex;
+}
+
+.nav-container {
+  display: flex;
+  flex: 1;
+}
+
+.flex-row {
+  display: flex;
+}
+
+.button-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.button {
+  width: 50%;
+  height: 40%;
+  align-self: center;
+  margin: 0px 10px;
+  border-radius: 40%;
+  font-family: 'Creepster', cursive;
+  font-weight: 100;
+  font-size: large;
+}
+
+.photo-container {
+  background-size: cover;
+}
+
+.footer-container {
+  text-align: center;
 }
