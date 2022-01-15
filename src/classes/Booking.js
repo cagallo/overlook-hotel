@@ -6,7 +6,12 @@ class Booking {
     this.roomNumber = bookingData.roomNumber;
     this.roomServiceCharges = [];
   }
+
 }
+
+
+
+
 
 
 export default Booking;

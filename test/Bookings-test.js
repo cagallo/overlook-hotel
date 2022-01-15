@@ -2,21 +2,22 @@ import {
   expect
 } from 'chai';
 import Booking from '../src/classes/Booking';
+import sampleBookingData from '../src/data/sample-bookings';
   
   
 describe('Booking', () => {
   let sampleBooking;
   
   beforeEach(() => {
-    const bookingData = {
-      "id": "5fwrgu4i7k55hl6sz",
-      "userID": 9,
-      "date": "2022/04/22",
-      "roomNumber": 15,
-      "roomServiceCharges": []
-    };
+    // const bookingData = {
+    //   "id": "5fwrgu4i7k55hl6sz",
+    //   "userID": 9,
+    //   "date": "2022/04/22",
+    //   "roomNumber": 15,
+    //   "roomServiceCharges": []
+    // };
 
-    sampleBooking = new Booking(bookingData);
+    sampleBooking = new Booking(sampleBookingData[0]);
   });
   
   it('should be a function', () => {
@@ -56,7 +57,7 @@ describe('Booking', () => {
   });
     
   it('should store a room number', () => {
-    expect(sampleBooking.roomNumber).to.equal(15);
+    expect(sampleBooking.roomNumber).to.equal(5);
   });
 
   it('should have a room service charges property', () => {
