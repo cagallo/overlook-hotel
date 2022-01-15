@@ -12,22 +12,20 @@ class User extends Customer {
     return `Welcome, ${firstName}!`;
   }
     
-//   gatherCustomerBookings(bookings) {
-//     this.allBookings = bookings.filter(booking => booking.userID === this.id);
-//     return this.allBookings.sort((currentBooking, nextBooking) => {
-//       currentBooking.date < nextBooking.date ?
-//         -1 : 1;
-//     });
-//   } 
+  //   gatherCustomerBookings(bookings) {
+  //     this.allBookings = bookings.filter(booking => booking.userID === this.id);
+  //     return this.allBookings.sort((currentBooking, nextBooking) => {
+  //       currentBooking.date < nextBooking.date ?
+  //         -1 : 1;
+  //     });
+  //   } 
       
   sortBookings(bookingData, currentDate) {
     let myBookings = this.gatherCustomerBookings(bookingData);
     console.log(myBookings)
-    let sortedBookings = myBookings.forEach(booking => {
+    myBookings.forEach(booking => {
       this.organizeBookings(booking, currentDate);
     })
-    console.log(sortedBookings)
-    return sortedBookings;
   }
     
 }
