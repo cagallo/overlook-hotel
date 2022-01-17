@@ -1,4 +1,4 @@
-import Customer from './Customer';
+// import Customer from './Customer';
 
 class User {
   constructor(customerData) {
