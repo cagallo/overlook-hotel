@@ -3,27 +3,34 @@
 
 html {
   min-height: 100%;
+  font-family: 'Creepster', cursive;
 }
 
 body {
-    background-image: url('https://www.teahub.io/photos/full/164-1641842_red-and-black-vintage-wallpaper-5-high-resolution..jpg');
-    // background-color: #cccccc;
+  background-image: url('../images/background-red.png');
+  // background-color: #cccccc;
 }
 
 
 
 img {
   height: 100%;
-  width: 100%;
+  width: 99%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5px;
+  border: 20px solid #DAA520;
 }
 
 h1 {
-  font-size: 70px; 
+  font-size: 70px;
   font-family: 'Creepster', cursive;
   font-weight: 25;
   margin: 30px 10px 5px 10px;
   color: #f80505;
 }
+
 
 nav {
   display: flex;
@@ -38,13 +45,24 @@ nav {
   display: flex;
 }
 
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.user-dashboard {
+  display: flex;
+  justify-content: space-between;
+}
+
 .button-section {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
 }
 
-.button {
+.buttons {
   width: 50%;
   height: 40%;
   align-self: center;
@@ -57,8 +75,84 @@ nav {
 
 .photo-container {
   background-size: cover;
+  // display: flex;
+  // align-content: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .footer-container {
   text-align: center;
+}
+
+.footer-text {
+  margin-top: 50px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  /* Could be more or less, depending on screen size */
+}
+
+.hidden {
+  display: none;
+}
+
+.booking-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px;
+}
+
+.individual-button {
+  font-family: 'Creepster', cursive;
+  font-weight: 100;
+  margin: 10px;
+  height: 25px;
+  width: 225px;
+}
+
+.book-stay {
+  text-align: center;
+  font-size: 20px;
+}
+
+.welcome-message {
+  font-size: 25px;
+}
+
+.booking-search {
+  display: flex;
+  justify-content: space-around;
+  margin: 30px;
 }
