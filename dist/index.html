@@ -21,22 +21,206 @@
     <h1>Overlook Hotel</h1>
   </div>
     <div class="button-section row">
-      <button class="button">Customer Login</button>
-      <button class="button">Book Room</button>
-      <button class="button">User Dashboard</button>
+      <button class="buttons" id="loginButton">Customer Login</button>
+      <button class="buttons" id="userDashboardButton">User Dashboard</button>
     </div>
   </nav>
   <div class="flex-row">
-  <section class="photo-container row">
-    <img src="https://free4kwallpapers.com/uploads/originals/2015/07/13/overlook-hotel-july-4th-ball-1921-the-shining.jpg" alt="people at a july 4th party">
+  <section class="photo-container row" id="photoContainer">
+    <img src="./images/overlook-hotel-main2.png" alt="people at a july 4th party">
   </section>
 </div>
+<!-- The Modal -->
+<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content login-page">
+    <span class="close">&times;</span>
+    <section class="user-dashboard">
+      <div>
+      <aside class="user-information">
+        <div class="amount-spent">
+          <h4>Total Amount Spent:</h4>
+          <p class="total-cost" id="totalCost"></p>
+        </div>
+        <div class="room-reservations" id="reservationInfo">
+          <h4>Upcoming Bookings</h4>
+          <article id="upcoming" class="card"></article>
+          <h4>Past Bookings</h4>
+          <article id="past" class="card"></article>
+        </div>
+      </aside> 
+    </div>
+    <div class="flex-column">
+      <section class="welcome-message">
+        <h2 class="welcome" id="welcomeMsg"></h2>
+      </section>
+      <section class="book-room">
+        <h3 class="book-stay">Book A Stay</h3>
+        <div class="booking-search">
+        <label for="booking-dropdown">Select Date:</label>
+        <input type="date" id="booking-dropdown" name="booking-dropdown">
+        <label for="room-type">Select Room Type:</label>
+        <select name="room-type" id="room-type">
+          <option value="all-rooms">All Rooms</option>
+          <option value="residential-suite">Residential Suite</option>
+          <option value="suite">Suite</option>
+          <option value="junior-suite">Junior Suite</option>
+          <option value="single-room">Single Room</option>
+        </select>
+      </div>
+        <div class='booking-buttons'>
+          <button class="individual-button">Find A Room</button>
+          <button class="individual-button">Clear Search</button>
+        </div>
+        <div class="available-rooms hidden">
+          <div class="room-card">
+            <img class='small-room-image' src='' alt='small image of ${room.type}' class='room-photo'>
+            <h4>Room Type: ${room.type}</h4>
+            <h4>Room Cost: ${room.cost}</h4>
+            <button>Book Room</button>
+          </div>
+        </div>
+      </section>
+    </div>
+    </section>
+  </div>
+</div>
+<div id="loginModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close" id="loginClose">&times;</span>
+    <form action="customer-login" class="login-form">
+      <label for="username">Username:</label><br>
+      <input type="text" id="username" name="username" value="" required><br>
+      <label for="password">Password:</label><br>
+      <input type="text" id="password" name="password" value="" required><br><br>
+      <input type="submit" value="Submit">
+    </form>
+    <img src="./images/the-grady-twins.png" class="twins-photo" alt="weird little demon girls">
+  </div>
+</div> 
 <footer>
   <div class="footer-container">
-  <h1>Your friends are waiting...</h1>
+  <h1 class="footer-text">Your friends are waiting...</h1>
 </div>
 </footer>
   <script src="bundle.js"></script>
 </body>
 
 </html>
+
+
+
+
+<!-- 
+<section id="profilePage" class="profile-page hidden">
+  <h2 id="welcomeMsg" class="welcome-msg">Welcome, User!</h2>
+  <h2>Total Expenses</h2>
+  <article id="totalSpent" class="total-expenses">
+  </article>
+  <h2>Your Upcoming Stays!</h2>
+  <article id="noUpcomingStays"></article>
+  <article id="upcomingStays" class="search-results">
+  </article>
+  <h2>Your Past Stays!</h2>
+  <article id="noPastStays"></article>
+  <article id="pastStays" class="search-results">
+  </article>
+</section> -->
+
+
+<!-- renderUserDashboard(user, expenses, currentDate) {
+  const welcomeMsg = document.getElementById('welcomeMsg');
+  const totalSpent = document.getElementById('totalSpent');
+
+  welcomeMsg.innerText = `Welcome ${user.name}`;
+  totalSpent.innerText = `Thanks for staying with us! You have spent $${expenses} on bookings.`;
+
+  domUpdates.renderUpcomingBookings(user, currentDate);
+  domUpdates.renderPastBookings(user, currentDate);
+},
+
+renderPastBookings(user, currentDate) {
+  const pastStays = document.getElementById('pastStays');
+  const noPastStays = document.getElementById('noPastStays')
+  pastStays.innerHTML = '';
+  noPastStays.innerHTML = '';
+
+  let pastBookings = user.getPastBookings(currentDate);
+  let sortedPastBookings = user.sortBookingsDescendingDates(pastBookings);
+
+  if (pastBookings.length === 0) {
+    noPastStays.innerHTML = `
+    <article class="no-stays-card">
+      <p>You have no past stays.</p>
+    </article>
+    `;
+  }
+
+  sortedPastBookings.forEach(booking => {
+    const bookingDate = dayjs(booking.date);
+    const formattedDate = bookingDate.format('MMM D YYYY');
+
+
+    pastStays.innerHTML += `
+      <article class="past-booking-card">
+        <div class="image-area">
+          <div class="image-container">
+            <img src="${booking.room.imageURL}" class="past-room-photo" alt="Light and airy room with double bed">
+            <div class="past-date">
+              <p id="date" class="date">${formattedDate}</p>
+              <h3 id="past-roomType" class="room-type">${booking.room.type}</h3>
+            </div>
+          </div>
+        </div>
+        <div class="past-text-area">
+          <p id="typeOfBed">${booking.room.numBeds} ${booking.room.bedSize}</p>
+          <p id="costPerNight">$${booking.room.costPerNight} per night</p>
+        </div>
+      </article>
+    `;
+  });
+}, -->
+<!-- 
+renderUpcomingBookings(user, currentDate) {
+  const upcomingStays = document.getElementById('upcomingStays');
+  const noUpcomingStays = document.getElementById('noUpcomingStays')
+  upcomingStays.innerHTML = '';
+  noUpcomingStays.innerHTML = '';
+
+  let upcomingBookings = user.getUpcomingBookings(currentDate);
+  let sortedUpcomingBookings =
+    user.sortBookingsAscendingDates(upcomingBookings);
+
+  if (upcomingBookings.length === 0) {
+    noUpcomingStays.innerHTML = `
+    <article class="no-stays-card">
+      <p>You have no upcoming stays.</p>
+    </article>
+    `;
+  }
+
+  sortedUpcomingBookings.forEach(booking => {
+    const bookingDate = dayjs(booking.date);
+    const formattedDate = bookingDate.format('MMM D YYYY');
+
+    upcomingStays.innerHTML += `
+      <article class="past-booking-card">
+        <div class="image-area">
+          <div class="image-container">
+            <img src="${booking.room.imageURL}" class="past-room-photo" alt="Light and airy room with double bed">
+            <div class="past-date">
+              <p id="date" class="date">${formattedDate}</p>
+              <h3 id="past-roomType" class="room-type">${booking.room.type}</h3>
+            </div>
+          </div>
+        </div>
+        <div class="past-text-area">
+          <p id="typeOfBed">${booking.room.numBeds} ${booking.room.bedSize}</p>
+          <p id="costPerNight">$${booking.room.costPerNight} per night</p>
+        </div>
+      </article>
+    `;
+  });
+}, -->
