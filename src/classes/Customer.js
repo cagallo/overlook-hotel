@@ -1,53 +1,66 @@
+import User from './User';
 import moment from 'moment';
 moment().format();
 
-class Customer {
-  constructor(customerData) {
-    this.id = customerData.id;
-    this.name = customerData.name;
-    this.allBookings = [];
-    this.pastBookings = [];
-    this.upcomingBookings = [];
-  }
-
-  gatherCustomerBookings(bookings) {
-    this.allBookings = bookings.filter(booking => booking.userID === this.id);
-    return this.allBookings.sort((currentBooking, nextBooking) => {
-      currentBooking.date < nextBooking.date ?
-        -1 : 1;
-    });
-  } 
-
-  organizeBookings(booking, currentDate) {
-    let dateToCompare = moment(new Date(currentDate)).format("YYYY/MM/DD");
-    if (moment(new Date(dateToCompare)).isAfter(moment(new Date(booking.date)), "day")) {
-      this.pastBookings.push(booking);
-    } 
-    if (moment(new Date(dateToCompare)).isBefore(moment(new Date(booking.date)), "day")) {
-      this.upcomingBookings.push(booking);
+class Customer extends User {
+    constructor(customerData) {
+        super(customerData)
+        this.allBookings = [];
+        this.pastBookings = [];
+        this.upcomingBookings = [];
     }
-    if (dateToCompare === booking.date) {
-      this.upcomingBookings.push(booking);
+
+    getBookings(bookingData, currentDate) {
+        let myBookings = this.populateAllBookings(bookingData);
+        myBookings.forEach(booking => {
+            this.groupBookings(booking, currentDate);
+        });
+
+        this.pastBookings = this.sortBookingsByDate(this.pastBookings);
+        this.upcomingBookings = this.sortBookingsByDate(this.upcomingBookings);
+    }
+
+    sortBookingsByDate(bookings) {
+        return bookings.sort((currentBooking, nextBooking) => {
+            return moment(currentBooking.date).unix() < moment(nextBooking.date).unix() ? -1 : 1;
+        });
     } 
-  }
+  
+    populateAllBookings(bookings) {
+        this.allBookings = bookings.filter(booking => booking.userID === this.id);
+        return this.sortBookingsByDate(this.allBookings)
+    } 
 
-
-  calculateTotalSpent(roomData) {
-    const totalCost = roomData.reduce((acc, room) => {
-      this.allBookings.forEach(booking => {
-        if (room.number === booking.roomNumber) {
-          acc += room.costPerNight;
+    groupBookings(booking, currentDate) {
+        let dateToCompare = moment(new Date(currentDate)).format("YYYY/MM/DD");
+        if (moment(new Date(dateToCompare)).isAfter(moment(new Date(booking.date)), "day")) {
+            this.pastBookings.push(booking);
+        } 
+        if (moment(new Date(dateToCompare)).isBefore(moment(new Date(booking.date)), "day")) {
+            this.upcomingBookings.push(booking);
         }
-      })
-      return acc;
-    }, 0)
-    return Number(totalCost.toFixed(2));
-  }
+        if (dateToCompare === booking.date) {
+            this.upcomingBookings.push(booking);
+        } 
+    }
+
+    calculateTotalSpent(roomData) {
+        const totalCost = roomData.reduce((acc, room) => {
+            this.allBookings.forEach(booking => {
+                if (room.number === booking.roomNumber) {
+                    acc += room.costPerNight;
+                }
+            })
+            return acc;
+        }, 0)
+        return Number(totalCost.toFixed(2));
+    }
+
+    greetCurrentUser() {
+        let firstName = this.name.split(' ')[0];
+        return `Welcome, ${firstName}. We are dying for you to join us!`;
+    }
 
 }
-
-
-
-
 
 export default Customer;

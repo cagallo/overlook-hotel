@@ -1,8 +1,7 @@
-import Customer from './Customer';
+// import Customer from './Customer';
 
-class User extends Customer {
+class User {
   constructor(customerData) {
-    super(customerData)
     this.id = customerData.id;
     this.name = customerData.name;
   }
