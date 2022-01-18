@@ -7,6 +7,7 @@ import domUpdates from '../src/domUpdates'
 import {
   roomsApi,
   bookingsApi,
+  getSingleUser,
   usersApi,
   postBooking
 } from './apiCalls';
@@ -34,6 +35,7 @@ const dashboardButton = document.getElementById('userDashboardButton');
 const loginButton = document.getElementById('loginButton')
 const searchRoomsButton = document.getElementById('findRoomButton')
 const clearSearchButton = document.getElementById('clearSearchButton')
+const loginSubmitButton = document.getElementById('submitLoginButton');
 
 // const photoContainerArea = document.getElementById('photoContainer')
 // const userDashboardView = document.querySelector('.user-dashboard')
@@ -46,11 +48,19 @@ const availableRoomsSection = document.getElementById("availableRooms")
 // Event Listeners
 
 dashboardButton.addEventListener('click', () => {
+  console.log('rendering dashboard...')
+  console.log(currentUser)
   domUpdates.renderDashboard(currentUser, roomsData);   
   domUpdates.showModal(modal);       
 })
 loginButton.addEventListener('click', () => {
-  domUpdates.showModal(loginModal);
+  if (!currentUser) {
+    domUpdates.showModal(loginModal);
+  } else {
+    currentUser = null;
+    loginButton.innerText = "Customer Login";
+    dashboardButton.classList.add('hidden');
+  }
 })
 searchRoomsButton.addEventListener('click', () => {
   const searchCriteria = domUpdates.getSearchCriteria();
@@ -79,6 +89,12 @@ searchRoomsButton.addEventListener('click', () => {
 clearSearchButton.addEventListener('click', () => {
   domUpdates.clearSearchCriteria();
 })
+loginSubmitButton.addEventListener('click', () => {
+  console.log('login clicked')
+  const loginData = domUpdates.getLoginInfo();
+  console.log(loginData)
+  verifyCustomerLogin(loginData);
+})
 span.addEventListener('click', () => {
   domUpdates.closeModal(modal);
 })
@@ -105,12 +121,14 @@ window.addEventListener('click', (event) => {
 
 Promise.all([roomsApi, bookingsApi(), usersApi])
   .then(data => {
+	
     [roomsData, bookingsData, usersData] = 
     [data[0].rooms, data[1].bookings, data[2].customers];
-    let userIndex = getRandomIndex(usersData);
+    console.log('test')
+    // let userIndex = getRandomIndex(usersData);
 
-    currentUser = new Customer(usersData[userIndex]);
-    currentUser.getBookings(bookingsData, new Date())
+    // currentUser = new Customer(usersData[userIndex]);
+    // currentUser.getBookings(bookingsData, new Date())
   })
   .catch(error => console.log(error));
 
@@ -185,6 +203,19 @@ function getAvailableRooms({ date, type }) {
   return matchingRooms;
 }
 
+function verifyCustomerLogin({username, password}) {
+  let customerId = username.substring(8);
+  let parsedId = Number(customerId);
+  if ((username.length === 10) && (0 < parsedId && parsedId < 51) && (password === 'overlook2021')) {
+    getSingleUser(parsedId)
+      .then(data => {
+        currentUser = new Customer(data)
+        currentUser.getBookings(bookingsData, new Date())
+      })
+      .then(domUpdates.displaySuccessfulLogin())
+      .catch(error => console.log(error));
+  }
+}
 
 // Helper Functions
 function getRandomIndex(array) {
@@ -200,3 +231,5 @@ const toggleShow = (elements) => {
     }
   });
 }
+
+

@@ -24,7 +24,7 @@
     </div>
     <div class="button-section row">
       <button class="buttons" id="loginButton">Customer Login</button>
-      <button class="buttons" id="userDashboardButton">User Dashboard</button>
+      <button class="buttons user-dashboard hidden" id="userDashboardButton">User Dashboard</button>
     </div>
   </nav>
   <div class="flex-row">
@@ -89,13 +89,14 @@
     <!-- Modal content -->
     <div class="modal-content">
       <span class="close" id="loginClose">&times;</span>
-      <form action="customer-login" class="login-form">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" value="" required><br>
-        <label for="password">Password:</label><br>
-        <input type="text" id="password" name="password" value="" required><br><br>
-        <input type="submit" value="Submit">
-      </form>
+      <section class="login-section">
+        <label for="username" class="login-text">Username:</label><br>
+        <input type="text" id="username" class="input-section" name="username" value="" required><br>
+        <label for="password" class="login-text">Password:</label><br>
+        <input type="text" id="password" class="input-section" name="password" value="" required><br><br>
+        <input type="submit" value="Submit" class="submit-login-button" id="submitLoginButton">
+        <p class='login-message' id='loginMessage'></p>
+      </section>
       <img src="./images/the-grady-twins.png" class="twins-photo" alt="weird little demon girls">
     </div>
   </div>

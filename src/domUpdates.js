@@ -2,8 +2,13 @@ import moment from 'moment';
 moment().format();
 
 /* QUERY SELECTORS */
+const loginButton = document.getElementById('loginButton')
+const loginModal = document.getElementById('loginModal')
+const loginMessage = document.getElementById('loginMessage')
+const dashboardButton = document.getElementById('userDashboardButton');
 const welcomeMsg = document.getElementById('welcomeMsg');
 const totalSpent = document.getElementById('totalCost');
+
 
 const reservationInfo = document.getElementById("reservationInfo")
 const upcomingReservations = document.getElementById("upcoming");
@@ -12,6 +17,8 @@ const pastReservations = document.getElementById("past")
 const availableRoomsSection = document.getElementById("availableRooms")
 const searchDate = document.getElementById("bookingDate");
 const searchRoomType = document.getElementById("roomType");
+const usernameInput = document.getElementById("username");
+const passwordInput = document.getElementById("password");
 
 function populateBookings(bookings, roomsData, reservationSection) {
 
@@ -45,6 +52,7 @@ function populateBookings(bookings, roomsData, reservationSection) {
 
 let domUpdates = {
   renderDashboard(customer, roomsData) {
+    console.log(customer)
     welcomeMsg.innerText = customer.greetCurrentUser();
     totalSpent.innerText = customer.calculateTotalSpent(roomsData);
 
@@ -126,6 +134,25 @@ let domUpdates = {
     searchDate.value = '';
     searchRoomType.selectedIndex = "0";
     availableRoomsSection.innerHTML = '';
+  },
+  getLoginInfo() {
+    let username = usernameInput.value
+    let password = passwordInput.value
+    console.log(username)
+    console.log(password)
+    return { username, password }
+  },
+  displaySuccessfulLogin() {
+    setTimeout(() => {
+      console.log("should print after 2 secs")
+      dashboardButton.classList.remove('hidden');
+      loginButton.innerText = 'Log Out';
+      domUpdates.closeModal(loginModal);
+      loginMessage.innerText = "";
+      usernameInput.value = "";
+      passwordInput.value = "";
+    }, 2000);
+    loginMessage.innerText = "You have successful logged in!";
   },
   showModal(modal) {
     modal.classList.add("showModal")
