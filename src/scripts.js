@@ -5,9 +5,9 @@ import Customer from '../src/classes/Customer';
 import domUpdates from '../src/domUpdates'
 
 import {
-    roomsApi,
-    bookingsApi,
-    usersApi,
+  roomsApi,
+  bookingsApi,
+  usersApi,
 } from './apiCalls';
 
 import moment from 'moment';
@@ -27,6 +27,9 @@ let roomsData, bookingsData, usersData;
 // Query Selectors 
 const dashboardButton = document.getElementById('userDashboardButton');
 const loginButton = document.getElementById('loginButton')
+const searchRoomsButton = document.getElementById('findRoomButton')
+const clearSearchButton = document.getElementById('clearSearchButton')
+
 // const photoContainerArea = document.getElementById('photoContainer')
 // const userDashboardView = document.querySelector('.user-dashboard')
 const modal = document.getElementById("myModal");
@@ -38,24 +41,32 @@ const spanLogin = document.getElementById("loginClose");
 // Event Listeners
 
 dashboardButton.addEventListener('click', () => {
-    domUpdates.renderDashboard(currentUser, roomsData);   
-    domUpdates.showModal(modal);       
+  domUpdates.renderDashboard(currentUser, roomsData);   
+  domUpdates.showModal(modal);       
 })
 loginButton.addEventListener('click', () => {
-    domUpdates.showModal(loginModal);
+  domUpdates.showModal(loginModal);
+})
+searchRoomsButton.addEventListener('click', () => {
+  const searchCriteria = domUpdates.getSearchCriteria();
+  const availableRooms = getAvailableRooms(searchCriteria);
+  currentUser.setAvailableRooms(availableRooms);
+  domUpdates.renderAvailableRooms(searchCriteria, currentUser);
+})
+clearSearchButton.addEventListener('click', () => {
+  domUpdates.clearSearchCriteria();
 })
 span.addEventListener('click', () => {
-    domUpdates.closeModal(modal);
+  domUpdates.closeModal(modal);
 })
 spanLogin.addEventListener('click', () => {
-    domUpdates.closeModal(loginModal);
+  domUpdates.closeModal(loginModal);
 })
 window.addEventListener('click', (event) => {
-    if (event.target === modal || event.target === loginModal) {
-        domUpdates.closeModal(event.target);
-    }
+  if (event.target === modal || event.target === loginModal) {
+    domUpdates.closeModal(event.target);
+  }
 });
-
 
 // Functions
 
@@ -70,15 +81,15 @@ window.addEventListener('click', (event) => {
 // }
 
 Promise.all([roomsApi, bookingsApi, usersApi])
-    .then(data => {
-        [roomsData, bookingsData, usersData] = 
+  .then(data => {
+    [roomsData, bookingsData, usersData] = 
     [data[0].rooms, data[1].bookings, data[2].customers];
-        let userIndex = getRandomIndex(usersData);
+    let userIndex = getRandomIndex(usersData);
 
-        currentUser = new Customer(usersData[userIndex]);
-        currentUser.getBookings(bookingsData, new Date())
-    })
-    .catch(error => console.log(error));
+    currentUser = new Customer(usersData[userIndex]);
+    currentUser.getBookings(bookingsData, new Date())
+  })
+  .catch(error => console.log(error));
 
 // function getLoginUser() {
 //     /** will be called from click event when login button is clicked
@@ -89,21 +100,54 @@ Promise.all([roomsApi, bookingsApi, usersApi])
 //      */
 // }
 
+function getAvailableRooms({ date, type }) {
+  const matchingRooms = bookingsData.filter(booking => {
+    
+    date = date.replace(/-/g, '/')
+    if (booking.date !== date) {
+      return false;
+    }
+		
+    const matchingRoom = roomsData.find(room => {
+      return booking.roomNumber === room.number;
+    });
+    
+    type = type.replace('-', ' ');
+    if (!matchingRoom || 
+			currentUser.id === booking.userID ||
+			type !== 'all rooms' && 
+			type !== matchingRoom.roomType) {
+      return false;
+    }
+
+    // populate booking object with data for the matching room
+    for (const key in matchingRoom) { 
+      booking[key] = matchingRoom[key];
+    }
+    booking.imageURL = './images/the-grady-twins.png'
+    booking.alt = 'test alt';
+		
+    return booking;
+  });
+
+  console.log(matchingRooms);
+  return matchingRooms;
+}
 // Helper Functions
 
 function getRandomIndex(array) {
-    return Math.floor(Math.random() * array.length);
+  return Math.floor(Math.random() * array.length);
 }
 
 const toggleShow = (elements) => {
-    elements.forEach(element => {
-        if (element.classList.contains('hidden')) {
-            console.log('hidddeeeennn')
-            element.classList.remove('hidden');
-        } else {
-            element.classList.add('hidden');
-        }
-    });
+  elements.forEach(element => {
+    if (element.classList.contains('hidden')) {
+      console.log('hidddeeeennn')
+      element.classList.remove('hidden');
+    } else {
+      element.classList.add('hidden');
+    }
+  });
 }
 
 
