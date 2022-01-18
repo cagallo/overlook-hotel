@@ -133,6 +133,7 @@ let domUpdates = {
   clearSearchCriteria() {
     searchDate.value = '';
     searchRoomType.selectedIndex = "0";
+    availableRoomsSection.innerHTML = '';
   },
   getLoginInfo() {
     let username = usernameInput.value
