@@ -125,6 +125,7 @@ let domUpdates = {
   clearSearchCriteria() {
     searchDate.value = '';
     searchRoomType.selectedIndex = "0";
+    availableRoomsSection.innerHTML = '';
   },
   showModal(modal) {
     modal.classList.add("showModal")

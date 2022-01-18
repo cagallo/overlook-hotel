@@ -17,6 +17,10 @@ moment().format();
 import './images/background-red.png';
 import './images/overlook-hotel-main2.png';
 import './images/the-grady-twins.png';
+import './images/residential-suite.png';
+import './images/suite.png';
+import './images/single-room.jpg';
+import './images/juniorsuite.jpg';
 
 console.log('This is the JavaScript entry file - your code begins here.');
 
@@ -156,14 +160,31 @@ function getAvailableRooms({ date, type }) {
     for (const key in matchingRoom) { 
       booking[key] = matchingRoom[key];
     }
-    booking.imageURL = './images/the-grady-twins.png'
-    booking.alt = 'test alt';
+    switch (matchingRoom.roomType) {
+    case 'residential suite':
+      booking.imageURL = './images/residential-suite.png';
+      booking.alt = 'bed in residential suite';
+      break;
+    case 'suite':
+      booking.imageURL = './images/suite.png';
+      booking.alt = 'bed in suite';
+      break;
+    case 'junior suite':
+      booking.imageURL = './images/juniorsuite.jpg';
+      booking.alt = 'bed in junior suite';
+      break;
+    case 'single room':
+      booking.imageURL = './images/single-room.jpg';
+      booking.alt = 'bed in single room';
+      break;
+    }
 		
     return booking;
   });
 
   return matchingRooms;
 }
+
 
 // Helper Functions
 function getRandomIndex(array) {
