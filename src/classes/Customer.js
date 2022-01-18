@@ -13,6 +13,8 @@ class Customer extends User {
 
   getBookings(bookingData, currentDate) {
     let myBookings = this.populateAllBookings(bookingData);
+    this.pastBookings = [];
+    this.upcomingBookings = [];
     myBookings.forEach(booking => {
       this.groupBookings(booking, currentDate);
     });
@@ -69,7 +71,7 @@ class Customer extends User {
   getAvailableRooms() {
     return this.availableRooms;
   }
-  
+
 }
 
 export default Customer;
