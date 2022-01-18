@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,15 +15,15 @@
     rel="stylesheet">
   <title>Overlook Hotel</title>
 </head>
-
 <body>
-  <nav>
+   <!-- nav bar -->
+  <nav aria-label="navigation bar">
     <div class="nav-container">
       <h1>Overlook Hotel</h1>
     </div>
     <div class="button-section row">
-      <button class="buttons" id="loginButton">Customer Login</button>
-      <button class="buttons user-dashboard hidden" id="userDashboardButton">User Dashboard</button>
+      <button class="buttons" id="loginButton" aria-label="open login page">Customer Login</button>
+      <button class="buttons user-dashboard hidden" id="userDashboardButton" aria-label="open user dashboard">User Dashboard</button>
     </div>
   </nav>
   <div class="flex-row">
@@ -32,54 +31,53 @@
       <img src="./images/overlook-hotel-main2.png" alt="people at a july 4th party">
     </section>
   </div>
-  <!-- The Modal -->
+  <!-- User Dashboard -->
   <div id="myModal" class="modal">
-    <!-- Modal content -->
     <div class="modal-content login-page">
-      <span class="close">&times;</span>
-      <section class="user-dashboard">
+      <span class="close"> aria-label="close page"&times;</span>
+      <section class="user-dashboard" aria-label="user dashboard">
         <div>
-          <aside class="user-information">
+          <aside aria-label="current user information" class="user-information">
             <div class="amount-spent">
               <h4 class="amount-text">Total Amount Spent</h4>
               <p class="total-cost" id="totalCost"></p>
             </div>
             <div class="room-reservations" id="reservationInfo">
               <h4>Upcoming Bookings</h4>
-              <article id="upcoming" class="card"></article>
+              <article aria-label="upcoming reservations" id="upcoming" class="card"></article>
               <h4>Past Bookings</h4>
-              <article id="past" class="card"></article>
+              <article aria-label="past reservations" id="past" class="card"></article>
             </div>
           </aside>
         </div>
         <div class="flex-column">
-          <section class="welcome-message">
+          <section aria-label="welcome user message" class="welcome-message">
             <h2 class="welcome" id="welcomeMsg"></h2>
           </section>
-          <section class="book-room">
+          <section aria-label="room booking section" class="book-room">
             <div class="booking-form">
-            <h3 class="book-stay">Book A Stay</h3>
-            <div class="booking-search">
-              <div class="date-search">
-              <label class="booking-input" for="bookingDate">Select Date:</label>
-              <input type="date" id="bookingDate" name="booking-dropdown">
-            </div>
-            <div class="room-type-search">
-              <label class="booking-input" for="roomType">Select Room Type:</label>
-              <select name="room-type" id="roomType">
-                <option value="all-rooms">All Rooms</option>
-                <option value="residential-suite">Residential Suite</option>
-                <option value="suite">Suite</option>
-                <option value="junior-suite">Junior Suite</option>
-                <option value="single-room">Single Room</option>
-              </select>
+              <h3 class="book-stay">Book A Stay</h3>
+              <div class="booking-search">
+                <div class="date-search">
+                  <label class="booking-input" for="bookingDate">Select Date:</label>
+                  <input type="date" id="bookingDate" name="booking-dropdown">
+                </div>
+                <div class="room-type-search">
+                  <label class="booking-input" for="roomType">Select Room Type:</label>
+                  <select name="room-type" id="roomType">
+                    <option value="all-rooms">All Rooms</option>
+                    <option value="residential-suite">Residential Suite</option>
+                    <option value="suite">Suite</option>
+                    <option value="junior-suite">Junior Suite</option>
+                    <option value="single-room">Single Room</option>
+                  </select>
+                </div>
+              </div>
+              <div class='booking-buttons'>
+                <button id="findRoomButton" class="individual-button" aria-label="search rooms button">Find A Room</button>
+                <button id="clearSearchButton" class="individual-button" aria-label="clear rooms search">Clear Search</button>
               </div>
             </div>
-            <div class='booking-buttons'>
-              <button id="findRoomButton" class="individual-button">Find A Room</button>
-              <button id="clearSearchButton" class="individual-button">Clear Search</button>
-            </div>
-          </div>
             <div id="availableRooms" class="available-rooms">
               <p class="reservation-msg">Select a room by availability date and/or type of room.</p>
             </div>
@@ -88,9 +86,8 @@
       </section>
     </div>
   </div>
+   <!-- User Login -->
   <div id="loginModal" class="modal">
-
-    <!-- Modal content -->
     <div class="modal-content">
       <span class="close" id="loginClose">&times;</span>
       <section class="login-section">
@@ -98,18 +95,17 @@
         <input type="text" id="username" class="input-section" name="username" value="" required><br>
         <label for="password" class="login-text">Password:</label><br>
         <input type="text" id="password" class="input-section" name="password" value="" required><br><br>
-        <input type="submit" value="Submit" class="buttons submit-login-button" id="submitLoginButton">
+        <input type="submit" value="Submit" class="buttons submit-login-button" id="submitLoginButton" aria-label="submit username and password">
         <p class='login-message' id='loginMessage'></p>
       </section>
       <img src="./images/the-grady-twins.png" class="twins-photo" alt="weird little demon girls">
     </div>
   </div>
-  <footer>
+  <footer aria-label="footer container">
     <div class="footer-container">
       <h1 class="footer-text">Your friends are waiting...</h1>
     </div>
   </footer>
   <script src="bundle.js"></script>
 </body>
-
 </html>
