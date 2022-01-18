@@ -105,7 +105,7 @@ let domUpdates = {
 								alt="${room.alt}"
 								>
 								<div class="book-room-container">
-								<button value="${room.id}" id="bookRoomButton" class="book-room-button booking-buttons">Book Room</button>
+								<button value="${room.id}" id="bookRoomButton" class="book-room-button booking-buttons" aria-label="book room button">Book Room</button>
 								</div>
             </div>
 						 		<div class="type-price">
