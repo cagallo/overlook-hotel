@@ -1,15 +1,20 @@
-let roomsApi = fetch("http://localhost:3001/api/v1/rooms")
+const roomsApi = fetch("http://localhost:3001/api/v1/rooms")
   .then(response => response.json())
 
-let bookingsApi = () => {
+const bookingsApi = () => {
   return fetch("http://localhost:3001/api/v1/bookings")
     .then(response => response.json())
 }
 
-let usersApi = fetch("http://localhost:3001/api/v1/customers")
+const getSingleUser = (id) => {
+  return fetch(`http://localhost:3001/api/v1/customers/${id}`)
+    .then(response => errorReponse(response))
+}
+
+const usersApi = fetch("http://localhost:3001/api/v1/customers")
   .then(response => response.json())
 
-let postBooking = (bookingData, id) => {
+const postBooking = (bookingData, id) => {
   const booking = {
     "userID": id,
     "date": bookingData.date,
@@ -23,4 +28,12 @@ let postBooking = (bookingData, id) => {
     }
   }).then(response => response.json())
 }
-export {roomsApi, bookingsApi, usersApi, postBooking}
+
+const errorReponse = (response) => {
+  if (response.ok) {
+    return response.json();
+  } else {
+    throw new Error('Login error. Please try again.');
+  }
+}
+export {roomsApi, bookingsApi, getSingleUser, usersApi, postBooking}
