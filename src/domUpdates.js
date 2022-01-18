@@ -14,7 +14,11 @@ const searchDate = document.getElementById("bookingDate");
 const searchRoomType = document.getElementById("roomType");
 
 function populateBookings(bookings, roomsData, reservationSection) {
+
+  reservationSection.innerHTML = '';
+	
   bookings.forEach(booking => {
+
     const bookedRoom = roomsData.find(room => {
       return booking.roomNumber === room.number;
     });
@@ -24,7 +28,7 @@ function populateBookings(bookings, roomsData, reservationSection) {
 
     reservationSection.innerHTML += `
         <div>
-        <article class="booking-card">
+        <article class="booking-card" id=${booking.id}>
             <div class="past-date">
                 <h2 class="date">${formattedDate}</h2>
                 <h3 class="room-type">${bookedRoom.roomType}</h3>
@@ -59,14 +63,20 @@ let domUpdates = {
     } else {
       pastReservations.innerHTML += `<p class="reservation-msg">Sorry, you have no upcoming reservations. Book one now!</p>`;
     }
-
-    availableRoomsSection.innerHTML = `<p class="reservation-msg">Select a room by availability date and/or type of room.</p>`;
   },
   renderAvailableRooms(searchCriteria, currentUser) {
 		
     availableRoomsSection.innerHTML = '';
-
-    if (currentUser.availableRooms.length < 1) {
+    console.log(moment(new Date(searchCriteria.date)).unix())
+    console.log(searchCriteria.date)
+    console.log(moment(new Date()).unix())
+    const formattedDate = moment(new Date()).format("YYYY-MM-DD");
+    if (moment(new Date(searchCriteria.date)).unix() < moment(new Date(formattedDate)).unix()) {
+      availableRoomsSection.innerHTML = `
+				<p>Please select today or a date in the future
+				</p>
+				`;
+    } else if (currentUser.availableRooms.length < 1) {
       availableRoomsSection.innerHTML = `
 			<p>Sorry ${currentUser.name}, 
 			no rooms were found for date: ${searchCriteria.date}
@@ -87,7 +97,7 @@ let domUpdates = {
 								alt="${room.alt}"
 								>
 								<div class="book-room-container">
-								<button id="bookRoomButton" class="book-room-button booking-buttons">Book Room</button>
+								<button value="${room.id}" id="bookRoomButton" class="book-room-button booking-buttons">Book Room</button>
 								</div>
             </div>
 						 		<div class="type-price">
@@ -123,6 +133,10 @@ let domUpdates = {
   closeModal(modal) {
     modal.classList.add("hideModal")
     modal.classList.remove("showModal")
+  },
+  showBookingStatus(roomInfoDiv, info) {
+    roomInfoDiv.innerHTML += `<p>${info.message}</p>`
   }
 }
+
 export default domUpdates;
