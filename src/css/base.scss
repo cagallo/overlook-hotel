@@ -36,6 +36,7 @@ h4 {
   font-size: 24px;
   border: 5px solid black;
   background-color: white;
+  margin-bottom: 10px;
 }
 
 nav {
@@ -136,6 +137,41 @@ grid-template-areas: "aside left"
   /* Could be more or less, depending on screen size */
 }
 
+.hideModal {
+  z-index:-1;
+  opacity:0;
+  animation: hide .25s;
+  transform: scale(0);
+} @keyframes hide {
+  from {
+    z-index:2;
+    transform: scale(1);
+    opacity:1;
+  } to {
+    z-index:-1;
+    transform: scale(0);
+    opacity:0;
+  }
+}
+
+.showModal {
+  display: block;
+  z-index:2;
+  opacity:1;
+  animation: show 1.5s;
+  transform: scale(1);
+} @keyframes show {
+  from {
+    z-index:-1;
+    transform: scale(0);
+    opacity:0;
+  } to {
+    z-index:2;
+    transform: scale(1);
+    opacity:1;
+  }
+}
+
 .hidden {
   display: none;
 }
@@ -157,11 +193,14 @@ grid-template-areas: "aside left"
 
 .book-stay {
   text-align: center;
-  font-size: 20px;
+  font-size: 24px;
 }
 
 .welcome-message {
   font-size: 25px;
+  border: 5px solid black;
+  margin-left: 20px;
+  background-color: white;
 }
 
 .booking-search {
@@ -181,7 +220,7 @@ grid-template-areas: "aside left"
  justify-content: center;
 }
 
-.card {
+.booking-card {
   display: flex;
   flex-direction: column;
   border: 5px solid black;
@@ -216,5 +255,41 @@ grid-template-areas: "aside left"
 // }
 
 .welcome {
-  margin-left: 12px;
+  margin-left: 16px;
+}
+
+.room-card {
+  display: flex;
+  flex-direction: column;
+  border: 5px solid black;
+  background-color: white;
+  margin-bottom: 15px;
+  padding: 10px;
+  text-align: center;
+  position: relative;
+}
+
+.room-thumbnail {
+  height: 150px;
+  width: 150px;
+}
+
+.amount-text {
+  border: none;
+  padding: 5px;
+}
+
+.reservation-msg {
+  text-align: center;
+}
+
+.book-room {
+  border: 5px solid black;
+  background-color: white;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.close {
+  font-size: 30px;
 }
