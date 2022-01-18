@@ -214,10 +214,11 @@ grid-template-areas: "aside left"
   width: 20%;
 }
 
-.login-form {
+.login-section {
  display: flex;
  flex-direction: column;
  justify-content: center;
+ align-items: center;
 }
 
 .booking-card {
@@ -352,4 +353,17 @@ grid-template-areas: "aside left"
   margin-top: 10px;
   list-style-type: none;
   padding: 30px;
+}
+
+.input-section {
+  width: 55%;
+  height: 25px;
+}
+
+.submit-login-button {
+  width: 30%;
+}
+
+.login-text {
+  font-size: 30px;
 }
