@@ -78,24 +78,30 @@ let domUpdates = {
 
     currentUser.availableRooms.forEach(room => {
       availableRoomsSection.innerHTML += `
-            <div class="room-card" id="${room.number}">
+        <div class="room-card" id="${room.number}">
+					<div class="image-cost-type">
             <div class="img-container">
                 <img 
 								src="${room.imageURL}"
 								class="room-thumbnail" 
 								alt="${room.alt}"
 								>
+								<div class="book-room-container">
+								<button id="bookRoomButton" class="book-room-button booking-buttons">Book Room</button>
+								</div>
             </div>
-              <div class="room-info">
+						 		<div class="type-price">
                 <h4 class="room-type">Room Type: ${room.roomType}</h4>
 								<h4 class="room-cost">Price Per Night: $${room.costPerNight}</h4>
-								<ul class="room-bed-info" style="list-style-type:none">
+								<div>
+					</div>
+					<div class="room-info">
+								<ul class="room-bed-info">
 									<li>Beds: ${room.numBeds} </li>
 									<li>Size: ${room.bedSize} </li>
 									<li>Bidet: ${room.bidet ? "Yes" : "No"}</li>
 								</ul>
-              </div>
-							<button class="bookRoomButton" class="book-room-button">Book Room</button>
+            </div>
             </div>
           `;
     });
