@@ -8,6 +8,7 @@ import {
   roomsApi,
   bookingsApi,
   usersApi,
+  postBooking
 } from './apiCalls';
 
 import moment from 'moment';
@@ -36,7 +37,7 @@ const modal = document.getElementById("myModal");
 const loginModal = document.getElementById('loginModal')
 const span = document.getElementsByClassName("close")[0];
 const spanLogin = document.getElementById("loginClose");
-
+const availableRoomsSection = document.getElementById("availableRooms")
 
 // Event Listeners
 
@@ -52,6 +53,24 @@ searchRoomsButton.addEventListener('click', () => {
   const availableRooms = getAvailableRooms(searchCriteria);
   currentUser.setAvailableRooms(availableRooms);
   domUpdates.renderAvailableRooms(searchCriteria, currentUser);
+
+  const bookings = document.querySelectorAll(".room-card");
+  bookings.forEach(booking => {
+    const button = booking.querySelector(".book-room-button");
+    const roomInfo = booking.querySelector(".room-info")
+    button.addEventListener('click', function (event) {
+      const bookingData = getBookingData(event.target.value);
+      postBooking(bookingData, currentUser.id)
+        .then((message) => {
+          domUpdates.showBookingStatus(roomInfo, message);
+          bookingsApi().then(data => {
+            currentUser.getBookings(data.bookings, new Date())
+            domUpdates.renderDashboard(currentUser, roomsData)
+          });
+        })
+        .catch(err => domUpdates.showBookingStatus(roomInfo, err))
+    })
+  })
 })
 clearSearchButton.addEventListener('click', () => {
   domUpdates.clearSearchCriteria();
@@ -80,7 +99,7 @@ window.addEventListener('click', (event) => {
 //     .then(data => data.filter())
 // }
 
-Promise.all([roomsApi, bookingsApi, usersApi])
+Promise.all([roomsApi, bookingsApi(), usersApi])
   .then(data => {
     [roomsData, bookingsData, usersData] = 
     [data[0].rooms, data[1].bookings, data[2].customers];
@@ -99,8 +118,21 @@ Promise.all([roomsApi, bookingsApi, usersApi])
 //      * use response to instantiate new Customer
 //      */
 // }
+function getBookingData(id) {
+  return bookingsData.find(booking => {
+    return booking.id === id;
+  })
+}
 
 function getAvailableRooms({ date, type }) {
+  console.log(date)
+  console.log(moment(new Date(date)).unix())
+  const formattedDate = moment(new Date()).format("YYYY-MM-DD");
+  console.log(moment(new Date(formattedDate)).unix())
+  if (moment(new Date(date)).unix() < moment(new Date(formattedDate)).unix()) {
+    return [];
+  }
+
   const matchingRooms = bookingsData.filter(booking => {
     
     date = date.replace(/-/g, '/')
@@ -130,11 +162,10 @@ function getAvailableRooms({ date, type }) {
     return booking;
   });
 
-  console.log(matchingRooms);
   return matchingRooms;
 }
-// Helper Functions
 
+// Helper Functions
 function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
 }
@@ -142,15 +173,9 @@ function getRandomIndex(array) {
 const toggleShow = (elements) => {
   elements.forEach(element => {
     if (element.classList.contains('hidden')) {
-      console.log('hidddeeeennn')
       element.classList.remove('hidden');
     } else {
       element.classList.add('hidden');
     }
   });
 }
-
-
-  
-
-  
