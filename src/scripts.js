@@ -5,9 +5,10 @@ import Customer from '../src/classes/Customer';
 import domUpdates from '../src/domUpdates'
 
 import {
-    roomsApi,
-    bookingsApi,
-    usersApi,
+  roomsApi,
+  bookingsApi,
+  usersApi,
+  postBooking
 } from './apiCalls';
 
 import moment from 'moment';
@@ -27,35 +28,64 @@ let roomsData, bookingsData, usersData;
 // Query Selectors 
 const dashboardButton = document.getElementById('userDashboardButton');
 const loginButton = document.getElementById('loginButton')
+const searchRoomsButton = document.getElementById('findRoomButton')
+const clearSearchButton = document.getElementById('clearSearchButton')
+
 // const photoContainerArea = document.getElementById('photoContainer')
 // const userDashboardView = document.querySelector('.user-dashboard')
 const modal = document.getElementById("myModal");
 const loginModal = document.getElementById('loginModal')
 const span = document.getElementsByClassName("close")[0];
 const spanLogin = document.getElementById("loginClose");
-
+const availableRoomsSection = document.getElementById("availableRooms")
 
 // Event Listeners
 
 dashboardButton.addEventListener('click', () => {
-    domUpdates.renderDashboard(currentUser, roomsData);   
-    domUpdates.showModal(modal);       
+  domUpdates.renderDashboard(currentUser, roomsData);   
+  domUpdates.showModal(modal);       
 })
 loginButton.addEventListener('click', () => {
-    domUpdates.showModal(loginModal);
+  domUpdates.showModal(loginModal);
+})
+searchRoomsButton.addEventListener('click', () => {
+  const searchCriteria = domUpdates.getSearchCriteria();
+  const availableRooms = getAvailableRooms(searchCriteria);
+  currentUser.setAvailableRooms(availableRooms);
+  domUpdates.renderAvailableRooms(searchCriteria, currentUser);
+
+  const bookings = document.querySelectorAll(".room-card");
+  bookings.forEach(booking => {
+    const button = booking.querySelector(".book-room-button");
+    const roomInfo = booking.querySelector(".room-info")
+    button.addEventListener('click', function (event) {
+      const bookingData = getBookingData(event.target.value);
+      postBooking(bookingData, currentUser.id)
+        .then((message) => {
+          domUpdates.showBookingStatus(roomInfo, message);
+          bookingsApi().then(data => {
+            currentUser.getBookings(data.bookings, new Date())
+            domUpdates.renderDashboard(currentUser, roomsData)
+          });
+        })
+        .catch(err => domUpdates.showBookingStatus(roomInfo, err))
+    })
+  })
+})
+clearSearchButton.addEventListener('click', () => {
+  domUpdates.clearSearchCriteria();
 })
 span.addEventListener('click', () => {
-    domUpdates.closeModal(modal);
+  domUpdates.closeModal(modal);
 })
 spanLogin.addEventListener('click', () => {
-    domUpdates.closeModal(loginModal);
+  domUpdates.closeModal(loginModal);
 })
 window.addEventListener('click', (event) => {
-    if (event.target === modal || event.target === loginModal) {
-        domUpdates.closeModal(event.target);
-    }
+  if (event.target === modal || event.target === loginModal) {
+    domUpdates.closeModal(event.target);
+  }
 });
-
 
 // Functions
 
@@ -69,16 +99,16 @@ window.addEventListener('click', (event) => {
 //     .then(data => data.filter())
 // }
 
-Promise.all([roomsApi, bookingsApi, usersApi])
-    .then(data => {
-        [roomsData, bookingsData, usersData] = 
+Promise.all([roomsApi, bookingsApi(), usersApi])
+  .then(data => {
+    [roomsData, bookingsData, usersData] = 
     [data[0].rooms, data[1].bookings, data[2].customers];
-        let userIndex = getRandomIndex(usersData);
+    let userIndex = getRandomIndex(usersData);
 
-        currentUser = new Customer(usersData[userIndex]);
-        currentUser.getBookings(bookingsData, new Date())
-    })
-    .catch(error => console.log(error));
+    currentUser = new Customer(usersData[userIndex]);
+    currentUser.getBookings(bookingsData, new Date())
+  })
+  .catch(error => console.log(error));
 
 // function getLoginUser() {
 //     /** will be called from click event when login button is clicked
@@ -88,25 +118,64 @@ Promise.all([roomsApi, bookingsApi, usersApi])
 //      * use response to instantiate new Customer
 //      */
 // }
+function getBookingData(id) {
+  return bookingsData.find(booking => {
+    return booking.id === id;
+  })
+}
+
+function getAvailableRooms({ date, type }) {
+  console.log(date)
+  console.log(moment(new Date(date)).unix())
+  const formattedDate = moment(new Date()).format("YYYY-MM-DD");
+  console.log(moment(new Date(formattedDate)).unix())
+  if (moment(new Date(date)).unix() < moment(new Date(formattedDate)).unix()) {
+    return [];
+  }
+
+  const matchingRooms = bookingsData.filter(booking => {
+    
+    date = date.replace(/-/g, '/')
+    if (booking.date !== date) {
+      return false;
+    }
+		
+    const matchingRoom = roomsData.find(room => {
+      return booking.roomNumber === room.number;
+    });
+    
+    type = type.replace('-', ' ');
+    if (!matchingRoom || 
+			currentUser.id === booking.userID ||
+			type !== 'all rooms' && 
+			type !== matchingRoom.roomType) {
+      return false;
+    }
+
+    // populate booking object with data for the matching room
+    for (const key in matchingRoom) { 
+      booking[key] = matchingRoom[key];
+    }
+    booking.imageURL = './images/the-grady-twins.png'
+    booking.alt = 'test alt';
+		
+    return booking;
+  });
+
+  return matchingRooms;
+}
 
 // Helper Functions
-
 function getRandomIndex(array) {
-    return Math.floor(Math.random() * array.length);
+  return Math.floor(Math.random() * array.length);
 }
 
 const toggleShow = (elements) => {
-    elements.forEach(element => {
-        if (element.classList.contains('hidden')) {
-            console.log('hidddeeeennn')
-            element.classList.remove('hidden');
-        } else {
-            element.classList.add('hidden');
-        }
-    });
+  elements.forEach(element => {
+    if (element.classList.contains('hidden')) {
+      element.classList.remove('hidden');
+    } else {
+      element.classList.add('hidden');
+    }
+  });
 }
-
-
-  
-
-  
