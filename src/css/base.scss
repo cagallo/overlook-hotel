@@ -24,12 +24,15 @@ img {
 }
 
 h1 {
-  font-size: 70px;
+  font-size: 80px;
   font-family: 'Creepster', cursive;
   font-weight: 25;
-  margin: 30px 10px 5px 10px;
+  margin: 15px 10px 5px 10px;
   color: #f80505;
+  text-shadow: 5px 5px 5px black;
 }
+
+
 
 
 h4 {
@@ -74,14 +77,22 @@ grid-template-areas: "aside left"
 }
 
 .buttons {
-  width: 50%;
-  height: 40%;
+  width: 70%;
+  height: 60%;
   align-self: center;
+  transition-duration: 0.4s;
   margin: 0px 10px;
   border-radius: 40%;
+  word-wrap: break-word;
   font-family: 'Creepster', cursive;
   font-weight: 100;
   font-size: large;
+}
+
+.buttons:hover {
+  background-color: #000000; 
+  color: #f80505;
+  border: 5px solid #DAA520;
 }
 
 .photo-container {
@@ -127,7 +138,7 @@ grid-template-areas: "aside left"
 .modal-content {
   // background-color: #fefefe;
   // background-image: url('../images/jack-torrance-login.png');
-  background-color: #8f2121;
+  background-color: #fd0808;
   // opacity: 30%;
   margin: 15% auto;
   /* 15% from the top and centered */
@@ -201,6 +212,7 @@ grid-template-areas: "aside left"
   border: 5px solid black;
   margin-left: 20px;
   background-color: white;
+  text-align: center;
 }
 
 .booking-search {
@@ -271,8 +283,8 @@ grid-template-areas: "aside left"
 }
 
 .room-thumbnail {
-  height: 150px;
-  width: 150px;
+  height: 175px;
+  width: 200px;
 }
 
 .amount-text {
@@ -282,6 +294,7 @@ grid-template-areas: "aside left"
 
 .reservation-msg {
   text-align: center;
+  font-size: 22px;
 }
 
 .book-room {
@@ -325,6 +338,7 @@ grid-template-areas: "aside left"
   border: 3px solid black;
   margin-bottom: 30px;
   margin-top: 40px;
+  padding: 7px;
 }
 
 .image-cost-type {
@@ -358,12 +372,24 @@ grid-template-areas: "aside left"
 .input-section {
   width: 55%;
   height: 25px;
+  border: 2px solid black;
 }
 
 .submit-login-button {
-  width: 30%;
+  width: 15%;
+  height: 50%;
+  border: 2px solid black;
 }
 
 .login-text {
   font-size: 30px;
+}
+
+.login-message {
+  font-size: 22px;
+}
+
+.booking-input {
+  margin-right: 10px;
+  margin-left: 0px;
 }
