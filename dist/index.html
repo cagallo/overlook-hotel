@@ -60,9 +60,12 @@
             <div class="booking-form">
             <h3 class="book-stay">Book A Stay</h3>
             <div class="booking-search">
-              <label for="bookingDate">Select Date:</label>
+              <div class="date-search">
+              <label class="booking-input" for="bookingDate">Select Date:</label>
               <input type="date" id="bookingDate" name="booking-dropdown">
-              <label for="roomType">Select Room Type:</label>
+            </div>
+            <div class="room-type-search">
+              <label class="booking-input" for="roomType">Select Room Type:</label>
               <select name="room-type" id="roomType">
                 <option value="all-rooms">All Rooms</option>
                 <option value="residential-suite">Residential Suite</option>
@@ -70,6 +73,7 @@
                 <option value="junior-suite">Junior Suite</option>
                 <option value="single-room">Single Room</option>
               </select>
+              </div>
             </div>
             <div class='booking-buttons'>
               <button id="findRoomButton" class="individual-button">Find A Room</button>
@@ -94,7 +98,7 @@
         <input type="text" id="username" class="input-section" name="username" value="" required><br>
         <label for="password" class="login-text">Password:</label><br>
         <input type="text" id="password" class="input-section" name="password" value="" required><br><br>
-        <input type="submit" value="Submit" class="submit-login-button" id="submitLoginButton">
+        <input type="submit" value="Submit" class="buttons submit-login-button" id="submitLoginButton">
         <p class='login-message' id='loginMessage'></p>
       </section>
       <img src="./images/the-grady-twins.png" class="twins-photo" alt="weird little demon girls">
