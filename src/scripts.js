@@ -48,8 +48,6 @@ const availableRoomsSection = document.getElementById("availableRooms")
 // Event Listeners
 
 dashboardButton.addEventListener('click', () => {
-  console.log('rendering dashboard...')
-  console.log(currentUser)
   domUpdates.renderDashboard(currentUser, roomsData);   
   domUpdates.showModal(modal);       
 })
@@ -82,6 +80,7 @@ searchRoomsButton.addEventListener('click', () => {
             domUpdates.renderDashboard(currentUser, roomsData)
           });
         })
+        .then(domUpdates.clearRoomSearch())
         .catch(err => domUpdates.showBookingStatus(roomInfo, err))
     })
   })

@@ -135,6 +135,11 @@ let domUpdates = {
     searchRoomType.selectedIndex = "0";
     availableRoomsSection.innerHTML = '';
   },
+  clearRoomSearch() {
+    setTimeout(() => {
+      domUpdates.clearSearchCriteria();
+    }, 2000);
+  },
   getLoginInfo() {
     let username = usernameInput.value
     let password = passwordInput.value
