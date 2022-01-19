@@ -25,24 +25,54 @@ describe('Customer', () => {
   });
 
   it('should be able to return customer bookings', () => {
-    customerOne.gatherCustomerBookings(sampleBookingData);
+    customerOne.getBookings(sampleBookingData, '2022/01/27');
     expect(customerOne.allBookings).to.deep.equal([sampleBookingData[1], sampleBookingData[4]]);
 
-    customerTwo.gatherCustomerBookings(sampleBookingData)
+    customerTwo.getBookings(sampleBookingData, '2022/01/24')
     expect(customerTwo.allBookings).to.deep.equal([]);
   });
 
   it('should return total amount spend on rooms', () => {
-    customerOne.gatherCustomerBookings(sampleBookingData);
+    customerOne.getBookings(sampleBookingData, '2022/01/27');
     expect(customerOne.calculateTotalSpent(sampleRoomData)).to.equal(787.84);
 
-    customerTwo.gatherCustomerBookings(sampleBookingData);
+    customerTwo.getBookings(sampleBookingData, '2022/01/27');
     expect(customerTwo.calculateTotalSpent(sampleRoomData)).to.equal(0);
   })
 
-    
-})
+  it('should be able to populate customer bookings', () => {
+    customerOne.populateAllBookings(sampleBookingData);
+    expect(customerOne.allBookings.length).to.equal(2);
+
+    customerTwo.populateAllBookings(sampleBookingData)
+    expect(customerTwo.allBookings.length).to.equal(0);
+  })
+
+  it('should correctly sort customer bookings', () => {
+    customerOne.getBookings(sampleBookingData, '2022/01/27');
+    customerOne.sortBookingsByDate(customerOne.allBookings);
+    expect(customerOne.allBookings.length).to.equal(2);
+    expect(customerOne.allBookings).to.deep.equal([sampleBookingData[1], sampleBookingData[4]])
   
+    customerTwo.getBookings(sampleBookingData, '2022/01/27');
+    customerTwo.sortBookingsByDate(customerTwo.allBookings)
+    expect(customerTwo.allBookings.length).to.equal(0);
+    expect(customerTwo.allBookings).to.deep.equal([]);
+  })
 
+  it('should correctly group customer bookings', function () {
+    customerOne.getBookings(sampleBookingData, '2022/01/27');
+    customerOne.groupBookings(sampleBookingData, "2022/01/27");
+    expect(customerOne.pastBookings.length).to.equal(1);
+    expect(customerOne.pastBookings).to.deep.equal([sampleBookingData[1]]);
+    expect(customerOne.upcomingBookings.length).to.equal(1)
+    expect(customerOne.upcomingBookings).to.deep.equal([sampleBookingData[4]]);
 
-
+    customerTwo.getBookings(sampleBookingData, '2022/01/27');
+    customerTwo.groupBookings(sampleBookingData, "2022/01/27")
+    expect(customerTwo.allBookings.length).to.equal(0);
+    expect(customerTwo.pastBookings.length).to.equal(0);
+    expect(customerTwo.upcomingBookings.length).to.equal(0);
+  });
+  
+})

@@ -40,53 +40,18 @@ describe('User', () => {
     expect(userOne.name).to.equal("Leatha Ullrich")
   });
 
-//   it("should have booking arrays", () => {
-//     userTwo.gatherCustomerBookings(sampleBookingData);
-//     expect(userTwo.allbookings).to.deep.equal([]);
-//     expect(userTwo.pastBookings).to.deep.equal([]);
-//     expect(userTwo.upcomingBookings).to.deep.equal([]);
-//   });
-
   it("should be able to have a different id and name", () => {
     expect(userTwo.id).to.equal(2);
     expect(userTwo.name).to.equal("Rocio Schuster");
   });
 
   it("should be able to greet current user by name", () => {
-    expect(userOne.greetCurrentUser()).to.equal("Welcome, Leatha!");
+    expect(userOne.greetCurrentUser()).to.equal("Welcome, Leatha! We are dying for you to join us!");
 
-    expect(userTwo.greetCurrentUser()).to.equal("Welcome, Rocio!");
+    expect(userTwo.greetCurrentUser()).to.equal("Welcome, Rocio! We are dying for you to join us!");
   });
 
-  it('should be able to return user bookings', () => {
-    expect(userOne.gatherCustomerBookings(sampleBookingData)).to.deep.equal([sampleBookingData[1], sampleBookingData[4]]);
+})
 
-    expect(userTwo.gatherCustomerBookings(sampleBookingData)).to.deep.equal([]);
-  });
 
-  it('should return total amount spend on rooms', () => {
-    userOne.gatherCustomerBookings(sampleBookingData);
-    expect(userOne.calculateTotalSpent(sampleRoomData)).to.equal(787.84);
-
-    userTwo.gatherCustomerBookings(sampleBookingData);
-    expect(userTwo.calculateTotalSpent(sampleRoomData)).to.equal(0);
-  })
-
-  it('should correctly sort customer bookings', function () {
-    userOne.sortBookings(sampleBookingData, "2022/01/27")
-    console.log(userOne.allBookings)
-    expect(userOne.allBookings.length).to.equal(2);
-    expect(userOne.pastBookings.length).to.equal(1);
-    expect(userOne.pastBookings).to.deep.equal([sampleBookingData[1]]);
-    expect(userOne.upcomingBookings.length).to.equal(1)
-    expect(userOne.upcomingBookings).to.deep.equal([sampleBookingData[4]]);
-
-    userTwo.sortBookings(sampleBookingData, "2022/01/27")
-    expect(userTwo.allBookings.length).to.equal(0);
-    expect(userTwo.pastBookings.length).to.equal(0);
-    expect(userTwo.upcomingBookings.length).to.equal(0);
-  });
-
-});
   
-
