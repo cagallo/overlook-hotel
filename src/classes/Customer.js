@@ -23,30 +23,6 @@ class Customer extends User {
     this.upcomingBookings = this.sortBookingsByDate(this.upcomingBookings);
   }
 
-  sortBookingsByDate(bookings) {
-    return bookings.sort((currentBooking, nextBooking) => {
-      return moment(new Date(currentBooking.date)).unix() < moment(new Date(nextBooking.date)).unix() ? -1 : 1;
-    });
-  } 
-  
-  populateAllBookings(bookings) {
-    this.allBookings = bookings.filter(booking => booking.userID === this.id);
-    return this.sortBookingsByDate(this.allBookings)
-  } 
-
-  groupBookings(booking, currentDate) {
-    let dateToCompare = moment(new Date(currentDate)).format("YYYY/MM/DD");
-    if (moment(new Date(dateToCompare)).isAfter(moment(new Date(booking.date)), "day")) {
-      this.pastBookings.push(booking);
-    } 
-    if (moment(new Date(dateToCompare)).isBefore(moment(new Date(booking.date)), "day")) {
-      this.upcomingBookings.push(booking);
-    }
-    if (dateToCompare === booking.date) {
-      this.upcomingBookings.push(booking);
-    } 
-  }
-
   calculateTotalSpent(roomData) {
     const totalCost = roomData.reduce((acc, room) => {
       this.allBookings.forEach(booking => {
@@ -59,9 +35,30 @@ class Customer extends User {
     return Number(totalCost.toFixed(2));
   }
 
-  greetCurrentUser() {
-    let firstName = this.name.split(' ')[0];
-    return `Welcome, ${firstName}. We are dying for you to join us!`;
+  populateAllBookings(bookings) {
+    this.allBookings = bookings.filter(booking => booking.userID === this.id);
+    return this.sortBookingsByDate(this.allBookings)
+  } 
+
+
+  sortBookingsByDate(bookings) {
+    return bookings.sort((currentBooking, nextBooking) => {
+      return moment(new Date(currentBooking.date)).unix() < moment(new Date(nextBooking.date)).unix() ? -1 : 1;
+    });
+  } 
+  
+
+  groupBookings(booking, currentDate) {
+    let dateToCompare = moment(new Date(currentDate)).format("YYYY/MM/DD");
+    if (moment(new Date(dateToCompare)).isAfter(moment(new Date(booking.date)), "day")) {
+      this.pastBookings.push(booking);
+    } 
+    if (moment(new Date(dateToCompare)).isBefore(moment(new Date(booking.date)), "day")) {
+      this.upcomingBookings.push(booking);
+    }
+    if (dateToCompare === booking.date) {
+      this.upcomingBookings.push(booking);
+    } 
   }
 
   setAvailableRooms(availableRooms) {
