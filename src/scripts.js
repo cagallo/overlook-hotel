@@ -109,6 +109,8 @@ function verifyCustomerLogin({username, password}) {
       })
       .then(domUpdates.displaySuccessfulLogin())
       .catch(error => console.log(error));
+  } else {
+    domUpdates.displayUnsuccessfulLogin();
   }
 }
 

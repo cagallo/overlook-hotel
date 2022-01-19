@@ -88,13 +88,13 @@ let domUpdates = {
     const formattedDate = moment(new Date()).format('YYYY-MM-DD');
     if (moment(new Date(searchCriteria.date)).unix() < moment(new Date(formattedDate)).unix()) {
       availableRoomsSection.innerHTML = `
-				<p>
+				<p class="reservation-error">
         Please select today or a date in the future
 				</p>
 				`;
     } else if (currentUser.availableRooms.length < 1) {
       availableRoomsSection.innerHTML = `
-			<p>Sorry ${currentUser.name}, 
+			<p class="reservation-error">Sorry ${currentUser.name}, 
 			no rooms were found for date: ${searchCriteria.date}
 			for selected type: ${searchCriteria.type} 
 			Please adjust selection and try again.
@@ -167,6 +167,10 @@ let domUpdates = {
       passwordInput.value = '';
     }, 2000);
     loginMessage.innerText = 'You have successfully logged in!';
+  },
+
+  displayUnsuccessfulLogin() {
+    loginMessage.innerText = "Password Invalid. Please try again."
   },
 
   showModal(modal) {
