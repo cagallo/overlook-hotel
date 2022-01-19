@@ -41,7 +41,7 @@ describe('Room', () => {
   });
       
   it('should store a room type', () => {
-    expect(sampleRoom.roomType).to.equal("residential suite");
+    expect(sampleRoom.roomType).to.equal('residential suite');
   });
 
   it('should have a bidet property', () => {
@@ -57,7 +57,7 @@ describe('Room', () => {
   });
       
   it('should store a bed size', () => {
-    expect(sampleRoom.bedSize).to.equal("queen");
+    expect(sampleRoom.bedSize).to.equal('queen');
   });
 
   it('should have a number of beds property', () => {

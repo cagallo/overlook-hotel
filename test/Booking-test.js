@@ -26,7 +26,7 @@ describe('Booking', () => {
   });
     
   it('should store a booking id', () => {
-    expect(sampleBooking.id).to.equal("5fwrgu4i7k55hl6sz");
+    expect(sampleBooking.id).to.equal('5fwrgu4i7k55hl6sz');
   });
     
   it('should have a userID property', () => {
@@ -42,7 +42,7 @@ describe('Booking', () => {
   });
     
   it('should store a booking date', () => {
-    expect(sampleBooking.date).to.equal("2022/04/22")
+    expect(sampleBooking.date).to.equal('2022/04/22')
   });
   
   it('should have a room number property', () => {

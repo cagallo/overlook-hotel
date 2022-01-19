@@ -1,9 +1,11 @@
-const roomsApi = fetch("http://localhost:3001/api/v1/rooms")
-  .then(response => response.json())
+const roomsApi = () => {
+  return fetch("http://localhost:3001/api/v1/rooms")
+    .then(response => errorReponse(response))
+}
 
 const bookingsApi = () => {
   return fetch("http://localhost:3001/api/v1/bookings")
-    .then(response => response.json())
+    .then(response => errorReponse(response))
 }
 
 const getSingleUser = (id) => {
@@ -11,8 +13,10 @@ const getSingleUser = (id) => {
     .then(response => errorReponse(response))
 }
 
-const usersApi = fetch("http://localhost:3001/api/v1/customers")
-  .then(response => response.json())
+const usersApi = () => {
+  return fetch("http://localhost:3001/api/v1/customers")
+    .then(response => errorReponse(response))
+} 
 
 const postBooking = (bookingData, id) => {
   const booking = {
@@ -26,14 +30,14 @@ const postBooking = (bookingData, id) => {
     headers: {
       'Content-Type': 'application/json'
     }
-  }).then(response => response.json())
+  }).then(response => errorReponse(response))
 }
 
 const errorReponse = (response) => {
   if (response.ok) {
     return response.json();
   } else {
-    throw new Error('Login error. Please try again.');
+    throw new Error('There was an error. Please try again.');
   }
 }
 export {roomsApi, bookingsApi, getSingleUser, usersApi, postBooking}
