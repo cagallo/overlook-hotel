@@ -1,6 +1,5 @@
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/base.scss';
-import sampleUserData from './data/sample-users';
 import Customer from '../src/classes/Customer';
 import domUpdates from '../src/domUpdates'
 
@@ -36,9 +35,6 @@ const loginButton = document.getElementById('loginButton')
 const searchRoomsButton = document.getElementById('findRoomButton')
 const clearSearchButton = document.getElementById('clearSearchButton')
 const loginSubmitButton = document.getElementById('submitLoginButton');
-
-// const photoContainerArea = document.getElementById('photoContainer')
-// const userDashboardView = document.querySelector('.user-dashboard')
 const modal = document.getElementById("myModal");
 const loginModal = document.getElementById('loginModal')
 const span = document.getElementsByClassName("close")[0];
@@ -108,17 +104,7 @@ window.addEventListener('click', (event) => {
 
 // Functions
 
-// function getUsersData(currentUser) {
-//   fetch("http://localhost:3001/api/v1/customers")
-// }
-
-// function getBookingsData() {
-//   fetch("http://localhost:3001/api/v1/bookings")
-//     .then(response => response.json())
-//     .then(data => data.filter())
-// }
-
-Promise.all([roomsApi, bookingsApi(), usersApi])
+Promise.all([roomsApi(), bookingsApi(), usersApi()])
   .then(data => {
 	
     [roomsData, bookingsData, usersData] = 
