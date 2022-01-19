@@ -63,7 +63,7 @@ If a user wants to book a room, they can click the book room button and they wil
 3. Rrun `npm install`
 4. Run `npm start`
 5. You should see the message: "Overlook API is now running on http://localhost:3001" in your terminal  
-6. `cd` out of that directory then clone down this repository
+6. `cd` out of that directory then clone down [this repository](https://github.com/cagallo/overlook-hotel)
 7. Run `npm install`
 8. Run `npm start` in your terminal
 9. Go to http://localhost:8080/ and you should see the website
