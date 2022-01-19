@@ -1,54 +1,13 @@
-/* This is an example of how to import a partial scss file*/
 @import '_variables';
+@import '_mixins';
 
 html {
   min-height: 100%;
-  font-family: 'Creepster', cursive;
+  font-family: $main-font;
 }
 
 body {
   background-image: url('../images/background-red.png');
-  // background-color: #cccccc;
-}
-
-
-
-img {
-  height: 100%;
-  width: 99%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 5px;
-  border: 20px solid #DAA520;
-}
-
-h1 {
-  font-size: 80px;
-  font-family: 'Creepster', cursive;
-  font-weight: 25;
-  margin: 15px 10px 5px 10px;
-  color: #f80505;
-  text-shadow: 5px 5px 5px black;
-}
-
-
-
-
-h4 {
-  font-size: 24px;
-  border: 5px solid black;
-  background-color: white;
-  margin-bottom: 10px;
-}
-
-nav {
-  display: flex;
-}
-
-.nav-container {
-  display: flex;
-  flex: 1;
 }
 
 .flex-row {
@@ -56,96 +15,84 @@ nav {
 }
 
 .flex-column {
-  display: flex;
-  flex-direction: column;
   justify-content: flex-start;
+  @include flex-column();
 }
 
-.user-dashboard {
-//   display: flex;
-//   justify-content: space-between;
-display: grid;
-grid-template-areas: "aside left"
-                    "section right"
+/* Image Section */
 
+img {
+  @include sizing(100%, 99%);
+  display: block;
+  @include margin-auto();
+  margin-top: 5px;
+  border: 20px solid #DAA520;
+}
+
+.photo-container {
+  background-size: cover;
+  display: block;
+  @include margin-auto();
+}
+
+/* Navigation Bar Section */
+
+h1 {
+  font-size: 80px;
+  font-family: $main-font;
+  font-weight: 25;
+  margin: 15px 10px 5px 10px;
+  color: $blood-red;
+  text-shadow: 5px 5px 5px black;
+}
+
+.nav-container {
+  flex: 1;
 }
 
 .button-section {
-  display: flex;
+  @include flex-row(flex-start);
   flex-direction: row;
-  justify-content: flex-start;
 }
 
 .buttons {
-  width: 70%;
-  height: 60%;
+  @include sizing(60%, 70%);
   align-self: center;
   transition-duration: 0.4s;
   margin: 0px 10px;
   border-radius: 40%;
   word-wrap: break-word;
-  font-family: 'Creepster', cursive;
+  font-family: $main-font;
   font-weight: 100;
   font-size: large;
 }
 
 .buttons:hover {
-  background-color: #000000; 
-  color: #f80505;
+  background-color: $black; 
+  color: $blood-red;
   border: 5px solid #DAA520;
 }
 
-.photo-container {
-  background-size: cover;
-  // display: flex;
-  // align-content: center;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.footer-container {
-  text-align: center;
-}
-
-.footer-text {
-  margin-top: 50px;
-}
-
 /* The Modal (background) */
+
 .modal {
   display: none;
-  /* Hidden by default */
   position: fixed;
-  /* Stay in place */
   z-index: 1;
-  /* Sit on top */
   left: 0;
   top: 0;
-  width: 100%;
-  /* Full width */
-  height: 100%;
-  /* Full height */
+  @include sizing(100%, 100%);
   overflow: auto;
-  /* Enable scroll if needed */
   background-color: rgb(0, 0, 0);
-  /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4);
-  /* Black w/ opacity */
 }
 
-/* Modal Content/Box */
 .modal-content {
-  // background-color: #fefefe;
-  // background-image: url('../images/jack-torrance-login.png');
-  background-color: #fd0808;
-  // opacity: 30%;
+  background-color: $blood-red;
   margin: 15% auto;
-  /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
-  /* Could be more or less, depending on screen size */
 }
 
 .hideModal {
@@ -183,72 +130,66 @@ grid-template-areas: "aside left"
   }
 }
 
-.hidden {
-  display: none;
+/* User Dashboard Section */
+
+h4 {
+  font-size: $font-size24;
+  border: $default-border;
+  background-color: $white;
+  margin-bottom: 10px;
+}
+
+.user-dashboard {
+display: grid;
+grid-template-areas: "aside left"
+                    "section right";
+
 }
 
 .booking-buttons {
-  display: flex;
-  flex-direction: column;
+  @include flex-column();
   align-items: center;
   margin: 40px;
 }
 
 .individual-button {
-  font-family: 'Creepster', cursive;
+  font-family: $main-font;
   font-weight: 100;
   margin: 10px;
-  height: 25px;
-  width: 225px;
+  @include sizing(25px, 225px);
 }
 
 .book-stay {
   text-align: center;
-  font-size: 24px;
+  font-size: $font-size24;
 }
 
 .welcome-message {
   font-size: 25px;
-  border: 5px solid black;
+  border: $default-border;
   margin-left: 20px;
-  background-color: white;
+  background-color: $white;
   text-align: center;
 }
 
 .booking-search {
-  display: flex;
-  justify-content: space-around;
+  @include flex-row(space-around);
   margin: 30px;
 }
 
-.twins-photo {
-  height: 20%;
-  width: 20%;
-}
-
-.login-section {
- display: flex;
- flex-direction: column;
- justify-content: center;
- align-items: center;
-}
-
 .booking-card {
-  display: flex;
-  flex-direction: column;
-  border: 5px solid black;
-  background-color: white;
+  @include flex-column();
+  border: $default-border;
+  background-color: $white;
   margin-bottom: 15px;
   padding: 10px;
   text-align: center;
   position: relative;
-  
 }
 
 .total-cost {
   text-align: center;
   font-size: 20px;
-  // border: 5px solid black;
 }
 
 .user-information {
@@ -257,25 +198,18 @@ grid-template-areas: "aside left"
 }
 
 .amount-spent {
-  border: 5px solid black;
-  background-color: white;
+  border: $default-border;
+  background-color: $white;
 }
-
-// .login-page {
-//   background-image: url('../images/jack-torrance-login.png');
-//   background-color: #f80505;
-//   opacity: 30%;
-// }
 
 .welcome {
   margin-left: 16px;
 }
 
 .room-card {
-  display: flex;
-  flex-direction: column;
-  border: 5px solid black;
-  background-color: white;
+  @include flex-column();
+  border: $default-border;
+  background-color: $white;
   margin-bottom: 15px;
   padding: 10px;
   text-align: center;
@@ -283,8 +217,7 @@ grid-template-areas: "aside left"
 }
 
 .room-thumbnail {
-  height: 175px;
-  width: 200px;
+  @include sizing(175px, 200px);
 }
 
 .amount-text {
@@ -292,21 +225,20 @@ grid-template-areas: "aside left"
   padding: 5px;
 }
 
+.login-message,
 .reservation-msg {
-  text-align: center;
   font-size: 22px;
 }
 
-.book-room {
-  // border: 5px solid black;
-  // background-color: white;
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: space-between;
-  margin-left: 20px;
-  margin-top: 20px;
+.reservation-msg {
+  text-align: center;
 }
 
+.book-room {
+  margin: 20px 0px 0px 20px;
+}
+
+.login-text,
 .close {
   font-size: 30px;
 }
@@ -316,44 +248,36 @@ grid-template-areas: "aside left"
 }
 
 .booking-form {
-  border: 5px solid black;
+  border: $default-border;
   margin-bottom: 10px;
-  background-color: white;
+  background-color: $white;
 }
 
 .book-room-button {
-  font-family: 'Creepster', cursive;
+  font-family: $main-font;
   font-weight: 100;
   margin: 10px;
-  height: 25px;
-  width: 225px;
-  // display: flex;
-  // align-content: center;
+  @include sizing(25px, 225px)
 }
 
 .room-info {
-  display: flex;
-  flex-direction: column;
+  @include flex-column();
   align-items: center;
   border: 3px solid black;
-  margin-bottom: 30px;
-  margin-top: 40px;
+  margin: 40px 0px 0px 5px;
   padding: 7px;
 }
 
 .image-cost-type {
-  display: flex;
-  justify-content: space-around;
+  @include flex-row(space-around);
 }
 
 .type-price {
-  display: flex;
-  flex-direction: column;
+  @include flex-column();
   margin-top: 5px;
 }
 
 .book-room-container {
-  // display: flex;
   margin-top: 50px;
 }
 
@@ -369,27 +293,42 @@ grid-template-areas: "aside left"
   padding: 30px;
 }
 
+/* Login Section */
+
+.login-section {
+  @include flex-column();
+  justify-content: center;
+  align-items: center;
+ }
+
 .input-section {
-  width: 55%;
-  height: 25px;
+  @include sizing(25px, 55%);
   border: 2px solid black;
 }
 
 .submit-login-button {
-  width: 15%;
-  height: 50%;
+  @include sizing(50%, 15%);
   border: 2px solid black;
 }
 
-.login-text {
-  font-size: 30px;
-}
-
-.login-message {
-  font-size: 22px;
+.twins-photo {
+  @include sizing(20%, 20%)
 }
 
 .booking-input {
-  margin-right: 10px;
-  margin-left: 0px;
+  margin: 0px 10px 0px 0px;
+}
+
+/* Footer Section */
+
+.footer-container {
+  text-align: center;
+}
+
+.footer-text {
+  margin-top: 50px;
+}
+
+.hidden {
+  display: none;
 }
