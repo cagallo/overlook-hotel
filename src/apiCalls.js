@@ -1,6 +1,6 @@
 const roomsApi = () => {
   return fetch("http://localhost:3001/api/v1/rooms")
-  .then(response => errorReponse(response))
+    .then(response => errorReponse(response))
 }
 
 const bookingsApi = () => {
@@ -15,7 +15,7 @@ const getSingleUser = (id) => {
 
 const usersApi = () => {
   return fetch("http://localhost:3001/api/v1/customers")
-  .then(response => errorReponse(response))
+    .then(response => errorReponse(response))
 } 
 
 const postBooking = (bookingData, id) => {

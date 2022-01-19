@@ -2,7 +2,6 @@ import {
   expect
 } from 'chai';
 import Customer from '../src/classes/Customer';
-import User from '../src/classes/User';
 import sampleUserData from '../src/data/sample-users';
 import sampleBookingData from '../src/data/sample-bookings';
 import sampleRoomData from '../src/data/sample-rooms';
@@ -62,14 +61,14 @@ describe('Customer', () => {
 
   it('should correctly group customer bookings', function () {
     customerOne.getBookings(sampleBookingData, '2022/01/27');
-    customerOne.groupBookings(sampleBookingData, "2022/01/27");
+    customerOne.groupBookings(sampleBookingData, '2022/01/27');
     expect(customerOne.pastBookings.length).to.equal(1);
     expect(customerOne.pastBookings).to.deep.equal([sampleBookingData[1]]);
     expect(customerOne.upcomingBookings.length).to.equal(1)
     expect(customerOne.upcomingBookings).to.deep.equal([sampleBookingData[4]]);
 
     customerTwo.getBookings(sampleBookingData, '2022/01/27');
-    customerTwo.groupBookings(sampleBookingData, "2022/01/27")
+    customerTwo.groupBookings(sampleBookingData, '2022/01/27')
     expect(customerTwo.allBookings.length).to.equal(0);
     expect(customerTwo.pastBookings.length).to.equal(0);
     expect(customerTwo.upcomingBookings.length).to.equal(0);

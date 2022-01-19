@@ -1,11 +1,8 @@
 import {
   expect
 } from 'chai';
-import Customer from '../src/classes/Customer';
 import User from '../src/classes/User';
 import sampleUserData from '../src/data/sample-users';
-import sampleBookingData from '../src/data/sample-bookings';
-import sampleRoomData from '../src/data/sample-rooms';
   
   
 describe('User', () => {
