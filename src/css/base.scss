@@ -225,13 +225,11 @@ grid-template-areas: "aside left"
   padding: 5px;
 }
 
-.login-message,
-.reservation-msg {
-  font-size: 22px;
-}
 
+.login-message,
 .reservation-error,
 .reservation-msg {
+  font-size: 22px;
   text-align: center;
 }
 
